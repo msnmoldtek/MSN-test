@@ -1,0 +1,112 @@
+<apex:page controller="Doctorlistpagecls" tabStyle="Doctor__c">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script>
+           $.noConflict();
+             jQuery(document).ready(function()
+             {
+               jQuery.extend(jQuery.expr[":"], {
+                 "containsIN": function(elem, i, match, array)
+                  {
+                return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                         
+                    }
+                  });
+
+                jQuery(document).on("keyup",".search",function(){
+
+
+
+               var searchterm = jQuery(this).val();
+
+               if(searchterm.length > 0) {
+                var lmatch=jQuery('.list tbody tr').text();
+
+                 var match = jQuery('.list tbody tr:containsIN("' + searchterm + '")');
+
+                 var nomatch = jQuery('.list tbody tr:not(:containsIN("' + searchterm + '"))');
+
+                      match.addClass('selected');
+
+                         nomatch.css("display", "none");
+
+     } 
+            else {
+
+                       jQuery('.list tbody tr').css("display", "");
+
+                       jQuery('.list tbody tr').removeClass('selected');
+
+                   }
+
+                 });
+
+                  });
+ 
+      </script>
+
+
+
+<style>
+body .bPageBlock .pbBody .labelCol{
+text-align: left;
+}
+body,td{
+font-family: 'Open Sans', sans-serif;
+color:black;
+}
+body .pbBody table.list tr td {
+color: #000;
+font-size: 1.1em;
+}
+.serchfld
+{
+width: 550px;
+border-radius: 8px;
+height: 20px;
+border: 1px solid #BBB6B6;
+margin-bottom: 10px;
+background-image: url(https://c.ap1.visual.force.com/resource/1418208486000/srch);
+background-repeat: no-repeat;
+background-position: 270px -1px;
+}
+</style>
+<apex:form >
+<!--<apex:outputLabel >Doctor Search:</apex:outputLabel>&nbsp;&nbsp;-->
+<input type="text" class="search" placeholder="Search Doctor"/>
+<apex:pageBlock >
+<div style="width: 100%;height: 286px;overflow: scroll;">
+<apex:pageBlockButtons location="top">
+<apex:commandButton value="Add New Doctor" action="{!newDoctor}" style="  margin: 0% 0% 0% -44%;"/>
+</apex:pageBlockButtons>
+<apex:pageBlockTable value="{!lstDoc}" var="D">
+
+
+<!-- <apex:column headerValue="Check Action">
+<apex:inputCheckbox />
+</apex:column> -->
+<apex:column headerValue="Action" >
+<apex:commandLink value="Edit" action="/{!D.id}/e"/>&nbsp;|&nbsp;
+<!--<apex:commandLink value="Edit" action="/{!D.id}/e"/>-->
+<apex:commandLink value="Del" action="{!delDoc}">
+<apex:param value="{!D.id}" name="pard" assignTo="{!recdid}"/>
+</apex:commandLink>
+</apex:column>
+
+<!--<apex:commandLink value="Del" action="{!delDoc}">
+<apex:param value="{!D.id}" name="pard" assignTo="{!recdid}"/>
+</apex:commandLink>
+</apex:column>-->
+<apex:column headerValue="Doctor Name">
+<apex:commandLink value="{!D.Name}" action="/{!D.id}"/>
+</apex:column>
+
+<apex:column value="{!D.Area_Place__c}"/>
+<apex:column value="{!D.Category__c}"/>
+<apex:column value="{!D.Speciality__c}"/>
+<apex:column value="{!D.Hospital__c}"/>
+</apex:pageBlockTable>
+</div>
+</apex:pageBlock>
+</apex:form>
+  
+</apex:page>

@@ -1,0 +1,145 @@
+<apex:page standardController="Area__c" extensions="AreaDetailPageControllor" docType="html-5.0" >
+
+<apex:pageMessages />
+    <apex:detail subject="{!Area__c.id}" relatedList="false" inlineEdit="true"/>
+    
+    <style>
+    .activeTab {background-color: #236FBD; color:white; width:30%;background-image:none;font-weight: bold;font-size: 115%;font-family: "Verdana"}
+    .inactiveTab { background-color: lightgrey;  width:300px;color:black; background-image:none;font-size: 100%;}
+    .headstyle {background-color: #236FBD; color:white; background-image:none;font-weight: bold;font-size: 100%;font-family: "Verdana"}
+    .rich-tabhdr-cell-active{width:25%;}
+    .rich-tabhdr-cell-inactive{width:25%;}
+    .rich-tabhdr-cell-active table{width:100%;}
+     .rich-tabhdr-cell-inactive table{width:100%;}
+    </style>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script>
+           $.noConflict();
+             jQuery(document).ready(function()
+             {
+               jQuery.extend(jQuery.expr[":"], {
+                 "containsIN": function(elem, i, match, array)
+                  {
+                return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                         
+                    }
+                  });
+
+                jQuery(document).on("keyup",".search",function(){
+
+
+
+               var searchterm = jQuery(this).val();
+
+               if(searchterm.length > 0) {
+                var lmatch=jQuery('.list tbody tr').text();
+
+                 var match = jQuery('.list tbody tr:containsIN("' + searchterm + '")');
+
+                 var nomatch = jQuery('.list tbody tr:not(:containsIN("' + searchterm + '"))');
+
+                      match.addClass('selected');
+
+                         nomatch.css("display", "none");
+
+     } 
+            else {
+
+                       jQuery('.list tbody tr').css("display", "");
+
+                       jQuery('.list tbody tr').removeClass('selected');
+
+                   }
+
+                 });
+
+                  });
+ 
+      </script>
+
+    
+   
+    <apex:tabPanel switchType="client" activeTabClass="activeTab" inactiveTabClass="inactiveTab">
+    <apex:tab label="Doctors" >
+    
+    <apex:pageBlock >
+    
+    <input type="text" class="search" placeholder="Search Doctor"/><br/>
+    <apex:form >
+        <apex:commandButton value="Add New Doctor" action="/a09/e?CF00Nj0000007m5FD={!area.Name}&CF00Nj0000007m5FD_lkid={!Area.Id}&retURL=%2F{!Area.Id}"/>
+    </apex:form>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+     <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;" rendered="{!(Doctors.size=0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="doc" value="{!Doctors }" rendered="{!Doctors.size>0}">   
+            
+            <apex:column headerValue="Doctor Name">
+                <a href="/{!doc.id}">{!Doc.Name}</a>
+            </apex:column>
+            
+        <apex:column value="{!doc.Category__c}"/> 
+        <apex:column value="{!doc.Speciality__c}"/> 
+        <apex:column value="{!doc.Qualification__c }"/>
+        <apex:column value="{!doc.Hospital__c }"/>
+        <apex:column value="{!doc.Area_Place__c }"/> 
+            
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    
+    </apex:tab>
+    <apex:tab label="Pharmacists " >
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Pharmacist"/><br/>
+    <apex:form >
+        <apex:commandButton value="Add New Pharmacist" action="/a0C/e?CF00Nj0000007m5Fc={!area.Name}&CF00Nj0000007m5Fc_lkid={!Area.Id}&retURL=%2F{!Area.Id}"/>
+    </apex:form>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+     <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;" rendered="{!(Pharmacists.size=0)}">No Records found</apex:outputLabel>
+    
+        <apex:pageBlockTable var="phm" value="{!Pharmacists }" rendered="{!Pharmacists.size>0}">       
+            
+          <apex:column headerValue="Pharmacist">
+                <a href="/{!phm.id}">{!Phm.Name}</a>
+            </apex:column>
+            <apex:column headerValue="Name of the Owner" value="{!phm.Name_of_the_Owner__c}"/>
+            <apex:column headerValue="MR" value="{!phm.MR__c}"/>
+            <apex:column headerValue="Area" value="{!phm.Area_Place__c}"/>
+          
+             
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    </apex:tab>
+    
+      <apex:tab label="Hospitals" >
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Hospital"/><br/>
+    <apex:form >
+        <apex:commandButton value="Add New Hospital" action="/a0H/e?CF00Nj0000007u6h3={!area.Name}&CF00Nj0000007u6h3_lkid={!Area.Id}&retURL=%2F{!Area.Id}"/>
+    </apex:form>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+     <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;" rendered="{!(Hospitals.size=0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="Hspl" value="{!Hospitals }" rendered="{!Hospitals.size>0}">       
+            
+           <apex:column headerValue="Hospital Name">
+                <a href="/{!Hspl.id}">{!Hspl.Name}</a>
+            </apex:column>
+            <apex:column value="{!Hspl.Area__c}"/>
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    </apex:tab>
+    <apex:tab label="Notes and Attachments"  >
+    <input type="text" class="search" placeholder="Search Notes and Attachments"/><br/>
+        <div style="width: 100%;height: 286px;overflow: scroll;">
+        
+        <apex:relatedList subject="{!Area__c}" list="CombinedAttachments"/>
+        </div>
+    </apex:tab>
+
+    </apex:tabPanel>
+    
+    
+</apex:page>

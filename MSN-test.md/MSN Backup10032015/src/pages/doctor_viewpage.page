@@ -1,0 +1,127 @@
+<apex:page standardController="Doctor__c" extensions="DoctorViewPageExt" >
+    <!--<apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Edit" />
+                <apex:commandButton value="Delete"/>
+                <apex:commandButton value="Clone"/>    
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection >
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>     
+    </apex:form>-->
+    
+      <style>
+    .activeTab {background-color: #236FBD; color:white; width:30%;background-image:none;font-weight: bold;font-size:100%;font-family: "Verdana";font-size: 100%;}
+    .inactiveTab { background-color: lightgrey;  width:300px;color:black; background-image:none;}
+    .headstyle {background-color: #236FBD; color:white; background-image:none;font-weight: bold;font-size: 100%;font-family: "Verdana"}
+    .rich-tabhdr-cell-active{width:25%;}
+    .rich-tabhdr-cell-inactive{width:25%;}
+    .rich-tabhdr-cell-active table{width:100%;}
+    .rich-tabhdr-cell-inactive table{width:100%;}
+    </style>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script>
+           $.noConflict();
+             jQuery(document).ready(function()
+             {
+               jQuery.extend(jQuery.expr[":"], {
+                 "containsIN": function(elem, i, match, array)
+                  {
+                return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                         
+                    }
+                  });
+
+                jQuery(document).on("keyup",".search",function(){
+
+
+
+               var searchterm = jQuery(this).val();
+
+               if(searchterm.length > 0) {
+                var lmatch=jQuery('.list tbody tr').text();
+
+                 var match = jQuery('.list tbody tr:containsIN("' + searchterm + '")');
+
+                 var nomatch = jQuery('.list tbody tr:not(:containsIN("' + searchterm + '"))');
+
+                      match.addClass('selected');
+
+                         nomatch.css("display", "none");
+
+     } 
+            else {
+
+                       jQuery('.list tbody tr').css("display", "");
+
+                       jQuery('.list tbody tr').removeClass('selected');
+
+                   }
+
+                 });
+
+                  });
+ 
+      </script>
+
+    
+    <apex:detail subject="{!Doctor__c.id}" relatedList="false" inlineEdit="true"/>
+
+    <apex:tabPanel switchType="client" activeTabClass="activeTab" inactiveTabClass="inactiveTab" style="width:100%;">
+    <apex:tab label="Targeted Products"  >
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Targeted Products"/>
+   <apex:form > <apex:commandButton value="Add New Targeted Product" action="/a0G/e?CF00Nj0000007twxq={!DocList.Name}&CF00Nj0000007twxq_lkid={!Doclist.Id}&retURL=%2F{!DocList.Id}"/></apex:form>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+                    <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;" rendered="{!(targetlist.size=0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="tar" value="{!targetlist}" rendered="{!targetlist.size>0}">       
+            <apex:column value="{!tar.Product_Name__c}"/>
+            <apex:column value="{!tar.Product_Name__r.Price__c}"/>  
+            <apex:column value="{!tar.Product_Name__r.Product_Code__c}"/>  
+            <apex:column value="{!tar.Product_Name__r.UOM__c}"/> 
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock> 
+    </apex:tab>
+    <apex:tab label="Prescribed Products" >
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Prescribed Products"/>
+    <apex:form > <apex:commandButton value="Add New Prescribed Product" action="/a0I/e?CF00Nj0000007twz6={!DocList.Name}&CF00Nj0000007twz6_lkid={!Doclist.Id}&retURL=%2F{!DocList.Id}"/></apex:form>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+                    <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;" rendered="{!(prescribelist.size=0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="pre" value="{!prescribelist}" rendered="{!prescribelist.size>0}">       
+            <apex:column value="{!pre.Product_Name__c}"/>
+            <apex:column value="{!pre.Product_Name__r.Price__c}"/>  
+            <apex:column value="{!pre.Product_Name__r.Product_Code__c}"/>  
+            <apex:column value="{!pre.Product_Name__r.UOM__c}"/> 
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    </apex:tab>
+      <apex:tab label="Promoted Products" >
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Promoted Products"/>
+    <apex:form > <apex:commandButton value="Add New Promoted Product" action="/a0J/e?CF00Nj0000007tyfL={!DocList.Name}&CF00Nj0000007tyfL_lkid={!Doclist.Id}&retURL=%2F{!Doclist.Id}"/></apex:form>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+                    <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;" rendered="{!(promotelist.size=0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="pro" value="{!promotelist}" rendered="{!promotelist.size>0}">       
+            <apex:column value="{!pro.Product_Name__c}"/>
+            <apex:column value="{!pro.Product_Name__r.Price__c}"/>  
+            <apex:column value="{!pro.Product_Name__r.Product_Code__c}"/>  
+            <apex:column value="{!pro.Product_Name__r.UOM__c}"/>     
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    </apex:tab>
+    <apex:tab label="Notes & Attachments">
+    <input type="text" class="search" placeholder="Search Notes and Attachments"/><br/>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+        <apex:relatedList subject="{!Doctor__c}" list="CombinedAttachments" />
+        </div>
+    </apex:tab>
+    </apex:tabPanel>
+    
+</apex:page>

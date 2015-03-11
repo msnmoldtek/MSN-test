@@ -1,0 +1,12 @@
+<apex:page standardController="Area__c" recordSetVar="lstval">
+<apex:form >
+<apex:sectionHeader title="Home"/>
+<apex:pageBlock >
+<apex:pageBlockTable value="{!lstval}" var="v">
+<apex:column value="{!v.Name}"/>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:form>>
+
+  
+</apex:page>

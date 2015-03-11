@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Brand_Wise_Products_Available__c</baseObject>
+    <category>other</category>
+    <deployed>false</deployed>
+    <description>Shows the brand wise quantity available in chemists</description>
+    <label>Chemists Brand wise Available</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Chemist__c</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Quantity_Brand_wise__c</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Product_Details__c</field>
+            <table>Brand_Wise_Products_Available__c</table>
+        </columns>
+        <masterLabel>Brand Wise Products Available</masterLabel>
+    </sections>
+</ReportType>

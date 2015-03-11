@@ -1,0 +1,100 @@
+<apex:page standardController="Hospital__c" extensions="hospitalDetailPage_Controllor" >
+    <style>
+    .activeTab {background-color: #236FBD; color:white; width:30%;background-image:none;font-weight: bold;font-size:100%;font-family: "Verdana";font-size: 100%;}
+    .inactiveTab { background-color: lightgrey;  width:300px;color:black; background-image:none;}
+    .headstyle {background-color: #236FBD; color:white; background-image:none;font-weight: bold;font-size: 100%;font-family: "Verdana"}
+
+    .rich-tabhdr-cell-active{width:50%;}
+    .rich-tabhdr-cell-inactive{width:50%;}
+    .rich-tabhdr-cell-active table{width:100%;}
+    .rich-tabhdr-cell-inactive table{width:100%;}
+    </style>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script>
+           $.noConflict();
+             jQuery(document).ready(function()
+             {
+               jQuery.extend(jQuery.expr[":"], {
+                 "containsIN": function(elem, i, match, array)
+                  {
+                return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                         
+                    }
+                  });
+
+                jQuery(document).on("keyup",".search",function(){
+
+
+
+               var searchterm = jQuery(this).val();
+
+               if(searchterm.length > 0) {
+                var lmatch=jQuery('.list tbody tr').text();
+
+                 var match = jQuery('.list tbody tr:containsIN("' + searchterm + '")');
+
+                 var nomatch = jQuery('.list tbody tr:not(:containsIN("' + searchterm + '"))');
+
+                      match.addClass('selected');
+
+                         nomatch.css("display", "none");
+
+     } 
+            else {
+
+                       jQuery('.list tbody tr').css("display", "");
+
+                       jQuery('.list tbody tr').removeClass('selected');
+
+                   }
+
+                 });
+
+                  });
+ 
+      </script>
+
+
+    <apex:form >
+        <apex:detail subject="{!Hospital__c.Id}" relatedList="false" inlineEdit="true"/>
+    </apex:form>
+    
+    <apex:tabPanel switchType="client" activeTabClass="activeTab" inactiveTabClass="inactiveTab">
+    <apex:tab label="Doctors" >
+    
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Doctor"/><br/>
+    <apex:form >
+        <apex:commandButton value="Add New Hospital" action="/a09/e?CF00Nj0000007u6hN={!hos.Name}&CF00Nj0000007u6hN_lkid={!hos.Id}&retURL=%2F{!hos.Id}"/>
+    </apex:form>
+    
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+    <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;" rendered="{!(Doctors.size=0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="doc" value="{!Doctors }" rendered="{!Doctors.size>0}">   
+            
+            <apex:column headerValue="Doctor Name">
+                <a href="/{!doc.id}">{!Doc.Name}</a>
+            </apex:column>
+            
+            <apex:column headerValue="Speciality" value="{!doc.Speciality__c}"/>
+            <apex:column headerValue="Category" value="{!doc.Category__c}"/>
+            <apex:column headerValue="Mobile" value="{!doc.Mobile__c}"/>
+            
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    
+    </apex:tab>
+    <apex:tab label="Notes and Attachments" >
+    <apex:pageBlock >
+   <input type="text" class="search" placeholder="Search Notes and Attachments"/><br/>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+    
+        <apex:relatedList subject="{!Hospital__c.Id}" list="CombinedAttachments" />
+        </div>
+    </apex:pageBlock>
+    </apex:tab>
+    </apex:tabPanel>
+    
+</apex:page>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <fields>
+        <fullName>Assigned_MR__c</fullName>
+        <label>Assigned MR</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Head_Quarters</relationshipName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <label>Country</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipLabel>Head Quarters</relationshipLabel>
+        <relationshipName>Head_Quarters</relationshipName>
+        <type>Lookup</type>
+    </fields>
+    <label>Head Quarter</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Assigned_MR__c</columns>
+        <columns>Country__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Head Quarter Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Head Quarters</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
