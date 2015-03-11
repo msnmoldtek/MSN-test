@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Doctor__c</fullName>
+        <label>Doctor</label>
+        <referenceTo>Doctor__c</referenceTo>
+        <relationshipLabel>Promoted Products</relationshipLabel>
+        <relationshipName>Promoted_Products</relationshipName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <label>Product Name</label>
+        <referenceTo>MSN_Product__c</referenceTo>
+        <relationshipLabel>Promoted Doctors</relationshipLabel>
+        <relationshipName>Promoted_Products</relationshipName>
+        <type>Lookup</type>
+    </fields>
+    <label>Promoted Product</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>Promoted-{0000}</displayFormat>
+        <label>Promoted Product Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Promoted Products</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

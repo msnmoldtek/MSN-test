@@ -1,0 +1,152 @@
+<apex:page standardController="Head_Quarter__c" extensions="HQViewExt">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script>
+           $.noConflict();
+             jQuery(document).ready(function()
+             {
+               jQuery.extend(jQuery.expr[":"], {
+                 "containsIN": function(elem, i, match, array)
+                  {
+                return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                         
+                    }
+                  });
+
+                jQuery(document).on("keyup",".search",function(){
+
+
+
+               var searchterm = jQuery(this).val();
+
+               if(searchterm.length > 0) {
+                var lmatch=jQuery('.list tbody tr').text();
+
+                 var match = jQuery('.list tbody tr:containsIN("' + searchterm + '")');
+
+                 var nomatch = jQuery('.list tbody tr:not(:containsIN("' + searchterm + '"))');
+
+                      match.addClass('selected');
+
+                         nomatch.css("display", "none");
+
+     } 
+            else {
+
+                       jQuery('.list tbody tr').css("display", "");
+
+                       jQuery('.list tbody tr').removeClass('selected');
+
+                   }
+
+                 });
+
+                  });
+ 
+      </script>
+ 
+   <style>
+    .activeTab {background-color: #236FBD; color:white; width:20%;background-image:none;font-weight: bold;font-size: 1em;font-family: "Verdana"}
+    .inactiveTab { background-color: lightgrey;  color:black; background-image:none;font-size: 100%;}
+    .headstyle {background-color: #236FBD; color:white; background-image:none;font-weight: bold;font-size: 100%;font-family: "Verdana"}
+    .rich-tabhdr-cell-active{width:20%;}
+    .rich-tabhdr-cell-inactive{width:20%;}
+    .rich-tabhdr-cell-active table{width:100%;}
+     .rich-tabhdr-cell-inactive table{width:100%;}
+    </style>
+
+    <apex:detail subject="{!Head_Quarter__c.Id}" relatedList="false" inlineEdit="true"/>
+    <apex:tabPanel switchType="client" activeTabClass="activeTab" inactiveTabClass="inactiveTab"  style="width:100%;" >
+    <apex:tab label="Areas">
+    <apex:pageBlock >
+   <input type="text" class="search" placeholder="Search Area"/><br/>
+    <apex:form >
+        <apex:commandButton value="Add New Area" action="/a0B/e?CF00Nj0000007m9a7={!hqlst.Name}&CF00Nj0000007m9a7_lkid={!hqlst.id}&retURL=%2F{!hqlst.id}"/>
+    </apex:form>
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+    
+     <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;color:red;" rendered="{!(arealist.size==0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="area" value="{!arealist}" headerClass="headstyle"  rendered="{!arealist.size>0}">       
+             <apex:column headerValue="Area Name" >
+             <a href="/{!area.id}">{!area.Name}</a>
+        <!-- <apex:commandLink value="{!area.Name}" action="/{!area.Id}"> 
+        </apex:commandLink> -->   
+        </apex:column>
+            <apex:column value="{!area.Assigned_MR__c}" /> 
+           <!-- <apex:column value="{!tar.Name}"/>    -->
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock> 
+    </apex:tab>
+    <apex:tab label="Doctors" >
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Doctor"/><br/>
+        <apex:form >
+        <apex:commandButton value="Add New Doctor" action="/a09/e?CF00Nj0000007m5Ey={!hqlst.Name}&CF00Nj0000007m5Ey_lkid={!hqlst.id}&retURL=%2F{!hqlst.id}"/>
+    </apex:form>
+    
+    
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+     <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;color:red;" rendered="{!(doclist.size==0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="doc" value="{!doclist }" headerClass="headstyle" rendered="{!doclist.size>0}">
+              
+            <apex:column headerValue="Doctor Name">
+        <a href="/{!doc.id}">{!doc.Name}</a>    
+        </apex:column>
+        <apex:column value="{!doc.Category__c}"/> 
+        <apex:column value="{!doc.Speciality__c}"/> 
+        <apex:column value="{!doc.Qualification__c }"/>
+        <apex:column value="{!doc.Hospital__c }"/>
+        <apex:column value="{!doc.Area_Place__c }"/>     
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    </apex:tab>
+      <apex:tab label="Pharmacists">
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Pharmacist"/><br/>
+     <apex:form >
+        <apex:commandButton value="Add New Pharmacist" action="/a0C/e?CF00Nj0000007m5Fr={!hqlst.Name}&CF00Nj0000007m5Fr_lkid={!hqlst.id}&retURL=%2F{!hqlst.id}"/>
+    </apex:form>
+    
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+    <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;color:red;" rendered="{!(phrmlist.size==0)}">No Records found</apex:outputLabel>
+        <apex:pageBlockTable var="phr" value="{!phrmlist}" headerClass="headstyle" rendered="{!phrmlist.size>0}">       
+            <apex:column headerValue="Pharmacist">
+        <a href="/{!phr.id}">{!phr.Name}</a>
+        </apex:column>
+            <apex:column value="{!phr.Name_of_the_Owner__c}"/>
+            <apex:column value="{!phr.MR__c}"/>
+            <apex:column value="{!phr.Area_Place__c}"/>      
+        </apex:pageBlockTable>
+        </div>
+    </apex:pageBlock>
+    </apex:tab>
+    <apex:tab label="Hospitals" >
+    <apex:pageBlock >
+    <input type="text" class="search" placeholder="Search Hospital"/><br/>
+    <apex:form >
+        <apex:commandButton value="Add New Hospital" action="/a0H/e?retURL=%2Fapex%2FHQ_view?id={!hqlst.id}"/>
+    </apex:form>
+    
+    <div style="width: 100%;height: 286px;overflow: scroll;">
+    <apex:outputLabel style="margin: 0% 0% 0% 45%;font-size: 1.5em;color:red;color:red;" rendered="{!(hsplst.size==0)}">No Records found</apex:outputLabel>
+    <apex:pageBlockTable value="{!hsplst}" var="hspl" rendered="{!hsplst.size>0}">
+         <apex:column headerValue="Hospital Name">
+         <a href="/{!Hspl.id}">{!Hspl.Name}</a>
+         </apex:column>
+         <apex:column value="{!hspl.Area__c}"/>
+    
+    </apex:pageBlockTable>
+    </div>
+    </apex:pageBlock>
+    </apex:tab>
+        <apex:tab label="Notes & Attachments" >
+        <input type="text" class="search" placeholder="Search Notes & Attachments"/><br/>
+        <div style="width: 100%;height: 286px;overflow: scroll;">
+        <apex:relatedList subject="{!Head_Quarter__c}" list="CombinedAttachments"  />
+        </div>
+    </apex:tab>
+    </apex:tabPanel>
+   
+</apex:page>

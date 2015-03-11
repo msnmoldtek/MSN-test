@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <fields>
+        <fullName>Doctor__c</fullName>
+        <label>Doctor</label>
+        <referenceTo>Doctor__c</referenceTo>
+        <relationshipLabel>Targeted Products</relationshipLabel>
+        <relationshipName>Targeted_Products</relationshipName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <label>Product Name</label>
+        <referenceTo>MSN_Product__c</referenceTo>
+        <relationshipLabel>Targeted Doctors</relationshipLabel>
+        <relationshipName>Targeted_Products</relationshipName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Target_Range__c</fullName>
+        <label>Target Range</label>
+        <picklist>
+            <picklistValues>
+                <fullName>P1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>P2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>P3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>P4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>P5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>P6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>P7</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Targeted Product</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>TP-{0000}</displayFormat>
+        <label>Targeted Product Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Targeted Products</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
